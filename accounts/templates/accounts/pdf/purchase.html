@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      /* Create two equal columns that floats next to each other */
+      .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 200px;
+      }
+
+      /* Clear floats after the columns */
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      td {
+        font-size: 12pt;
+      }
+      .f-title-bold {
+        font-size: 14pt;
+      }
+      .f-title-bold {
+        font-weight: bold;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid;
+      }
+      table {
+        width: 100%;
+      }
+      .tbl-purchase,
+      .print {
+        margin-top: 10px;
+      }
+      .col-left,
+      .col-right {
+        padding-top: 50px;
+      }
+      .col-left {
+        padding-left: 50px;
+      }
+      .col-right {
+        padding-right: 50px;
+      }
+      img {
+        width: 300px;
+        height: 120px;
+      }
+      th {
+        background-color: #ccc;
+      }
+      th {
+        height: 50px;
+      }
+      th {
+        text-transform: uppercase;
+      }
+      td,
+      .print {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <div class="row">
+      <div class="column col-left" style="background-color: #aaa">
+        <h5>Jakarta, 18 November 2022</h5>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. <br />
+          Quam hic eos sit, veniam voluptates ipsum velit iure. Ducimus, <br />
+          harum accusantium.
+        </p>
+      </div>
+      <div
+        class="column col-right"
+        style="background-color: #bbb; text-align: right"
+      >
+        <img src="{% static 'images/kupu.jpg' %}" />
+      </div>
+    </div>
+    <!-- end header -->
+    <!-- content -->
+    <div class="row">
+      <div style="text-align: center">
+        <span class="f-title-bold">Purchase Request</span><br />
+        <span>No. 123456789</span>
+      </div>
+      <div class="tbl-purchase">
+        <table>
+          <tr>
+            <th style="width: 1%">No.</th>
+            <th style="width: 15%">Nama Kapal</th>
+            <th style="width: 5%">Posisi</th>
+            <th style="width: 15%">Deskripsi Item</th>
+            <th style="width: 5%">PN</th>
+            <th style="width: 5%">Qty</th>
+            <th style="width: 5%">Sat</th>
+            <th style="width: 25%">Keterangan</th>
+          </tr>
+          <tr>
+            <td>1.</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>5.</td>
+            <td>&nbsp;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- end content -->
+    <div class="row">
+      <div class="print">
+        <a class="btn btn-primary" href="{% url 'printPurchase' %}">Print Purchase</a>
+      </div>
+    </div>
+  </body>
+</html>

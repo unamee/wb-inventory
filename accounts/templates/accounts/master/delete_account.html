@@ -1,0 +1,23 @@
+{% extends 'accounts/main.html' %} {% block content %}
+<div class="col" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-md">
+      <div class="card card-body">
+        <form action="{% url 'delete_account' item.id %}" method="POST">
+          <p>Are you sure you want to delete "{{item}}"</p>
+          {% csrf_token %}
+          <a href="{% url 'account' %}" class="btn btn-warning" role="button"
+            >Cancel</a
+          >
+          <input
+            type="submit"
+            name="submit"
+            value="Confirm"
+            class="btn btn-danger"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

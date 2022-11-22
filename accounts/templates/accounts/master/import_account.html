@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %} {% block content %}
+<!-- MAIN -->
+<div class="col" style="margin-top: 20px">
+  <div class="card">
+    <div class="row">
+      <div class="col-md">
+        <div class="card card-body">
+          <a
+            href="{% url 'account' %}"
+            class="btn btn-primary btn-sm btn-block"
+            >Master Account</a
+          >
+          <br>
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="formFile" class="form-label">Upload Master Account (*.xlsx)</label>
+            <input class="form-control" name="my_file" type="file" />
+            <br />
+            <input
+              type="submit"
+              name="submit"
+              value="Upload"
+              class="btn btn-success"
+            />
+          </form>
+          {% for message in messages %}
+          <p id="messages">{{ message }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Col END -->
+
+{% endfor %} {% endblock content %}

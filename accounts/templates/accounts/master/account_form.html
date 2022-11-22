@@ -1,0 +1,22 @@
+{% extends 'accounts/main.html' %} {% block content %}
+<div class="col" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-md">
+      <div class="card card-body">
+        <form action="" method="POST">
+          {% csrf_token %} {{ form }}
+          <a href="{% url 'account' %}" class="btn btn-warning" role="button"
+            >Cancel</a
+          >
+          <input
+            type="submit"
+            name="submit"
+            value="Submit"
+            class="btn btn-success"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

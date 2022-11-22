@@ -1,0 +1,161 @@
+{% extends 'accounts/main.html' %} {% block content %}
+<br>
+<!-- MAIN -->
+<div class="col" style="margin-top: 20px">
+  <div class="card">
+    <div class="row">
+      <div class="col-md">
+        <div class="card card-body">
+          
+            <a
+              href="{% url 'creates_account' %}"
+              class="btn btn-success btn-sm btn-block"
+              >Create Account</a
+            >
+          
+          <br />
+
+            <form action="{% url 'search_account' %}" method="POST">
+              {% csrf_token %}
+              <div class="input-group mb-3 col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="searched"
+                  placeholder="Search Account"
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-secondary" type="submit">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </form>
+          
+
+          <br />
+          <div>
+            <a href="{% url 'import_account' %}" class="btn btn-primary btn-sm"
+              >Import</a
+            >
+            <a href="{% url 'export_account' %}" class="btn btn-primary btn-sm"
+              >Export</a
+            >
+            <a href="{% url 'export_pdf' %}" class="btn btn-primary btn-sm"
+              >Print PDF</a
+            >
+            <a href="{% url 'viewPdf' %}"  target="_blank" class="btn btn-primary btn-sm"
+              >View PDF</a
+            >
+            <a href="{% url 'viewPurchase' %}"  target="_blank" class="btn btn-primary btn-sm"
+              >View Purchase</a
+            >
+          </div>
+
+          <br />
+
+          <table class="table">
+            <tr>
+              <th>Nama</th>
+              <th>Deskripsi</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+            {% for x in accounts %}
+            <tr>
+              <td>{{ x.nama }}</td>
+              <td>{{ x.deskripsi }}</td>
+              <td>
+                <a
+                  href="{% url 'update_account' x.id %}"
+                  class="btn btn-sm btn-info"
+                  >Update</a
+                >
+              </td>
+              <td>
+                <a
+                  href="{% url 'delete_account' x.id %}"
+                  class="btn btn-sm btn-danger"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+          <br /><br />
+          <div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {% if accounts.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page=1">&laquo; First</a>
+                </li>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    href="?page={{accounts.previous_page_number}}"
+                    >Previous</a
+                  >
+                </li>
+                {% elif not accounts.has_previous %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#">Previous</a>
+                </li>
+                {% endif %}
+                <!-- {% for i in nums %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ forloop.counter }}">
+                    {{ forloop.counter }}
+                  </a>
+                </li> 
+                {% endfor %} 
+                //-->
+                {% for page in accounts.paginator.page_range %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+
+                <!-- <li class="page-item disabled"><a class="page-link" href="#">Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}</a></li> //-->
+                <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                {% if accounts.has_next %}
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    href="?page={{ accounts.next_page_number }}"
+                    >Next</a
+                  >
+                </li>
+                {% endif %}
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    href="?page={{ accounts.paginator.num_pages}}"
+                    >Last &raquo</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <!-- <div>
+        {% if accounts.has_previous %}
+        <a href="?page=1">&laquo First </a>
+        <a href="?page={{accounts.previous_page_number}}">Previous</a>
+        {% endif %}
+        Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}
+        {% if accounts.has_next %}
+        <a href="?page={{ accounts.next_page_number }}">next</a>
+        <a href="?page={{ accounts.paginator.num_pages}}">Last &raquo</a>
+        {% endif %}
+        </div> //-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Col END -->
+{% endblock content %}

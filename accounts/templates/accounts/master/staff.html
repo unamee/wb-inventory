@@ -1,0 +1,42 @@
+{% extends 'accounts/main.html' %} {% block content %}
+<br />
+<!-- MAIN -->
+<div class="col" style="margin-top: 20px;">
+  <div class="card">
+    <div class="row">
+      <div class="col-md">
+        <div class="card card-body">
+            <a href="{% url 'creates_staff' %}" class="btn btn-success btn-sm btn-block">Create Staff</a>
+          <table class="table">
+            <tr>
+              <th>Username</th>
+              <th>Email Address</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Staff Status</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+            {% for x in staff %}
+            <tr>
+              <td>{{ x.username }}</a></td>
+              <td>{{ x.email }}</td>
+              <td>{{ x.first_name }}</td>
+              <td>{{ x.last_name }}</td>
+              {% if x.is_staff %}
+              <td><i class="fa-solid fa-check" aria-hidden="true"></i></td>
+              {% else %}
+              <td><i class="fa fa-times" aria-hidden="true"></i></td>
+              {% endif %}
+              <td><a href="{% url 'update_staff' x.id %}" class="btn btn-sm btn-info">Update</a></td>
+              <td><a href="{% url 'delete_staff' x.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Col END -->
+{% endblock content %}
