@@ -36,11 +36,11 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>
-      </li>
+      </li>    
+      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       </li>
-      {% endif %}
       <!-- This menu is hidden in bigger devices with d-sm-none. 
          The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
       <!--  <li class="nav-item dropdown d-sm-block d-md-none">

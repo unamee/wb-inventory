@@ -14,3 +14,9 @@ class AccountForm(forms.ModelForm):
         model = Account
         fields = ['nama', 'deskripsi']
         
+class PurchaseForm(forms.Form):
+    nama = forms.CharField(max_length=100)  
+    deskripsi_item = forms.CharField(max_length=100, disabled=True)
+    product_number = forms.CharField(max_length=50, disabled=True)
+    qty = forms.IntegerField()
+    satuan = forms.CharField(max_length=3, disabled=True)    

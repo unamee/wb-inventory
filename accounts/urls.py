@@ -29,5 +29,12 @@ urlpatterns = [
          views.updateAccount, name='update_account'),
     path('master/account/delete_account/<str:pk>/',
          views.deleteAccount, name='delete_account'),
+    
+    # staff #
+    path('user/', views.userPage, name='user_page'),
+    path('user/purchase-request/', views.purchaseRequest, name='purchase_request'),
+    path('user/purchase-request/create', views.createPurchase, name='create_purchase'),
+    path('user/purchase-request/create', views.createPurchase, name='search_item'),
+    
 
 ]

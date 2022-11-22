@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.template import loader
 from accounts.forms import StaffForm, AccountForm
-from accounts.models import Account
+from accounts.models import Account, Item
 # Create your views here.
 from accounts.decorators import unauthenticated_user, admin_only, allowed_users
 # Import pagination
@@ -42,7 +42,6 @@ def loginPage(request):
 
     context = {}
     return render(request, 'accounts/login.html', context)
-
 
 def logoutUser(request):
     logout(request)
@@ -347,3 +346,53 @@ def printPurchase(request):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['staff'])
+def userPage(request):
+    context = {}
+    return render(request, 'accounts/user.html', context)
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['staff'])
+def purchaseRequest(request):
+    context = {}
+    return render(request, 'accounts/transaksi/purchaseRequest.html', context)
+
+# @login_required(login_url='loginPage')
+# @allowed_users(allowed_roles=['staff'])
+# def createPurchase(request):
+#     form = PurchaseForm()
+#     if request.method == 'POST':
+#         #print('Printing POST:', request.POST)
+#         form = PurchaseForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('purchase_request')
+        
+#     template = loader.get_template('accounts/transaksi/purchase_form.html')
+#     context = {'form': form}    
+#     return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['staff'])
+def createPurchase(request):    
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        item = Item.objects.filter(Q(nama__icontains=searched) | Q(deskripsi__icontains=searched))
+        context = {'searched' : searched,
+                   'items' : item}
+    else:    
+        item = Item.objects.all().order_by('id').values()
+
+    # set up pagination
+    p = Paginator(item, 3)
+    page = request.GET.get('page')
+    items = p.get_page(page)
+    nums = "a" * items.paginator.num_pages
+
+    template = loader.get_template('accounts/transaksi/purchase_form.html')
+    context = {'item': item,
+               'items': items,
+               'nums': nums}
+    return HttpResponse(template.render(context, request))

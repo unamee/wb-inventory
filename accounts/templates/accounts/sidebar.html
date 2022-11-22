@@ -82,6 +82,28 @@
             <span class="menu-collapsed">Vendor</span>
           </a>
         </div>
+        {% else %}
+        <a
+          href="#submenu2"
+          data-toggle="collapse"
+          aria-expanded="false"
+          class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
+        >
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-user fa-fw mr-3"></span>
+            <span class="menu-collapsed">Transaction</span>
+            <span class="submenu-icon ml-auto"></span>
+          </div>
+        </a>
+        <!-- Submenu content -->
+        <div id="submenu2" class="collapse sidebar-submenu">
+          <a
+            href="{% url 'purchase_request' %}"
+            class="list-group-item list-group-item-action bg-dark text-white"
+          >
+            <span class="menu-collapsed">Purcase Request</span>
+          </a>          
+        </div>
         {% endif %}
         {% comment %} <a href="#" class="bg-dark list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-start align-items-center">
