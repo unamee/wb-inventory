@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.template import loader
 from accounts.forms import StaffForm, AccountForm
-from accounts.models import Account, Item
+from accounts.models import *
 # Create your views here.
 from accounts.decorators import unauthenticated_user, admin_only, allowed_users
 # Import pagination
@@ -386,7 +386,7 @@ def createPurchase(request):
         item = Item.objects.all().order_by('id').values()
 
     # set up pagination
-    p = Paginator(item, 3)
+    p = Paginator(item, 6)
     page = request.GET.get('page')
     items = p.get_page(page)
     nums = "a" * items.paginator.num_pages
@@ -395,4 +395,32 @@ def createPurchase(request):
     context = {'item': item,
                'items': items,
                'nums': nums}
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['staff'])
+def cartPurchase(request):
+    if request.user.is_authenticated:
+        account = request.user.account
+        order, created = Order.objects.get_or_create(account=account, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items= [] # gk perlu       
+    
+    template = loader.get_template('accounts/transaksi/purchase_cart.html')
+    context = {'items':items, 'order':order}
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['staff'])
+def checkoutPurchase(request):
+    if request.user.is_authenticated:
+        account = request.user.account
+        order, created = Order.objects.get_or_create(account=account, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items= [] # gk perlu     
+        
+    template = loader.get_template('accounts/transaksi/purchase_checkout.html')
+    context = {'items':items, 'order':order}
     return HttpResponse(template.render(context, request))

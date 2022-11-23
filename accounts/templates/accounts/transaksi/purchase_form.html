@@ -1,26 +1,64 @@
-{% extends 'accounts/main.html' %} {% block content %}
+{% extends 'accounts/main.html' %} {% load static %} {% block content %}
 <div class="col" style="margin-top: 20px">
   <div class="row">
     <div class="col-md">
       <div class="card card-body">
-        <form action="{% url 'search_item' %}" method="POST">
-          {% csrf_token %}
-          <div class="input-group mb-3 col-md-6">
-            <input
-              type="text"
-              class="form-control"
-              name="searched"
-              placeholder="Search Item"
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-secondary" type="submit">Search</button>
-            </div>
+        <div class="row">
+          <div class="col-md">
+            <form action="{% url 'search_item' %}" method="POST">
+              {% csrf_token %}
+              <div class="input-group mb-3 col-md">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="searched"
+                  placeholder="Search Item"
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-secondary" type="submit">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-
+          <div class="col-md text-right">
+            <a href="{% url 'cart_purchase' %}">
+              <img
+                src="{% static 'images/cart.png' %}"
+                alt=""
+                class="img-button"
+              />
+            </a>
+          </div>
+        </div>
         <br />
+        <div class="row">
+          {% for item in items %}
+          <div class="col-lg-4">
+            <img
+              class="thumbnail"
+              src="/images/{{ item.image }}"
+            />
+            <div class="box-element product">
+              <h6><strong>{{ item.nama }}</strong></h6>
+              <hr />
+
+              <button class="btn btn-outline-secondary add-btn">
+                Add to Cart
+              </button>
+              <a class="btn btn-outline-success" href="#">View</a>
+              <h4 style="display: inline-block; float: right">
+                <strong>Rp. {{ item.price | floatformat:2 }}</strong>
+              </h4>
+            </div>
+          </div>  
+          {% endfor %}        
+        </div>
+
+        {% comment %}
         <table class="table">
           <tr>
             <th>Nama</th>
@@ -37,11 +75,11 @@
                 class="btn btn-sm btn-info"
                 >Add</a
               >
-            </td>          
+            </td>
           </tr>
           {% endfor %}
         </table>
-        <br /><br />
+        {% endcomment %} <br /><br />
         <div>
           <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -50,9 +88,7 @@
                 <a class="page-link" href="?page=1">&laquo; First</a>
               </li>
               <li class="page-item">
-                <a
-                  class="page-link"
-                  href="?page={{items.previous_page_number}}"
+                <a class="page-link" href="?page={{items.previous_page_number}}"
                   >Previous</a
                 >
               </li>
@@ -66,17 +102,13 @@
               </li>
               {% endfor %} {% if items.has_next %}
               <li class="page-item">
-                <a
-                  class="page-link"
-                  href="?page={{ items.next_page_number }}"
+                <a class="page-link" href="?page={{ items.next_page_number }}"
                   >Next</a
                 >
               </li>
               {% endif %}
               <li class="page-item">
-                <a
-                  class="page-link"
-                  href="?page={{ items.paginator.num_pages}}"
+                <a class="page-link" href="?page={{ items.paginator.num_pages}}"
                   >Last &raquo</a
                 >
               </li>
