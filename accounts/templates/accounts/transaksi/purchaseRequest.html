@@ -9,28 +9,26 @@
             <a href="{% url 'create_purchase' %}" class="btn btn-success btn-sm btn-block">Create Purchase Request</a>
           <table class="table">
             <tr>
-              <th>Nomor</th>
-              <th>Item</th>
-              <th>Item Deskripsi</th>
+              <th>ID</th>
+              <th>Item</th>             
               <th>Qty</th>
               <th>Satuan</th>
               <th>Created Date</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
-            {% for x in staff %}
+            {% for x in order %}
             <tr>
-              <td>{{ x.username }}</a></td>
-              <td>{{ x.email }}</td>
-              <td>{{ x.first_name }}</td>
-              <td>{{ x.last_name }}</td>
-              {% if x.is_staff %}
+              <td>{{ x.id }}</a></td>
+              <td>{{ x.account }}</td>            
+              <td>{{ x.transaction_id }}</td>
+              {% if x.complete %}
               <td><i class="fa-solid fa-check" aria-hidden="true"></i></td>
               {% else %}
               <td><i class="fa fa-times" aria-hidden="true"></i></td>
               {% endif %}
-              <td>&nbsp;</td>
-              <td><a href="{% url 'update_staff' x.id %}" class="btn btn-sm btn-info">Update</a></td>
+              <td>{{ x.date_orderd }}</td>
+              <td><a href="{% url 'update_staff' x.id %}" class="btn btn-sm btn-info">View</a></td>
               <td><a href="{% url 'delete_staff' x.id %}" class="btn btn-sm btn-danger">Delete</a></td>
             </tr>
             {% endfor %}

@@ -30,8 +30,9 @@
                 src="{% static 'images/cart.png' %}"
                 alt=""
                 class="img-button"
-              />
+              /><p id="cart-total">{{ cartItems }}</p>
             </a>
+            
           </div>
         </div>
         <br />
@@ -46,7 +47,7 @@
               <h6><strong>{{ item.nama }}</strong></h6>
               <hr />
 
-              <button class="btn btn-outline-secondary add-btn">
+              <button data-produk="{{ item.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">
                 Add to Cart
               </button>
               <a class="btn btn-outline-success" href="#">View</a>

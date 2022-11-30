@@ -16,6 +16,30 @@
     />
     <!-- One file includes all the Font Awesome Free icons and utilities -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+
+    <script type="text/javascript">
+      var user = "{{request.user}}";
+
+      function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      var csrftoken = getToken("csrftoken");
+    </script>
+
     <!-- One file includes all the Font Awesome Free icons and utilities -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -27,14 +51,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
 
-  <body style="background-color: #eee;">
-    {% include 'accounts/navbar.html' %}
-    {% include 'accounts/sidebar.html' %}
-    {% block content %}
+  <body style="background-color: #eee">
+    {% include 'accounts/navbar.html' %} {% include 'accounts/sidebar.html' %}
+    {% block content %} {% endblock %}
 
-    {% endblock %}
-      
-    </div>
     <!-- body-row END -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script
@@ -88,16 +108,14 @@
         $("#collapse-icon").toggleClass(
           "fa-angle-double-left fa-angle-double-right"
         );
-
-       
       }
-      
-        $(".nav .nav-link").on("click", function(){
-          $(".nav").find(".active").removeClass("active");
-          $(this).addClass("active");
-       });
-      
+
+      $(".nav .nav-link").on("click", function () {
+        $(".nav").find(".active").removeClass("active");
+        $(this).addClass("active");
+      });
     </script>
-    
+
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
   </body>
 </html>
